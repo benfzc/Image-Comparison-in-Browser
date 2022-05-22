@@ -816,8 +816,7 @@ function handleFile(div, image) {
 	var details = document.createElement('div');
 	details.setAttribute('class', 'details');
 	details.innerHTML = image.file.name + '<br>\
-		Filesize: ' + image.file.size + ' Bytes<br>\
-		Filetype: ' + image.file.type;
+		Filesize: ' + image.file.size;
 	div.append(details);
 	if (!displayDetails) {
 		jQuery('.details').hide();
@@ -825,7 +824,9 @@ function handleFile(div, image) {
 
 	// Append EXIF
 	EXIF.getData(image.file, function () {
-		var text = EXIF.pretty(this).split('\n').join('<br>'); ;
+		//var text = EXIF.pretty(this).split('\n').join('<br>'); ;
+		var text = "ExposureTime: " + this.exifdata["ExposureTime"] 
+			+ "<br>ISO:" + this.exifdata["ISOSpeedRatings"];
 		if (text !== '') {
 			div.append(jQuery('<div class="exif">' + text + '</div>'));
 			if (!displayExif) {
