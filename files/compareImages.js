@@ -19,6 +19,7 @@ var play = true;
 var displayDetails = true;
 var displayExif = true;
 var displayPixelated = true;
+var displayDiff = false;
 
 var temp;
 
@@ -46,6 +47,17 @@ var temp;
 			jQuery('.exif').hide();
 		}
 	});
+
+	displayDiff = jQuery('#displayDiff').is(':checked');
+	jQuery('#displayDiff').parent().bind('click', function () {
+		displayDiff = this.childNodes[0].checked;
+		if (displayDiff) {
+			displayRight(true);
+		} else {
+			displayRight(false);
+		}
+	});
+
 	displayPixelated = jQuery('#pixelated').is(':checked');
 	var pixelatedStyle = 'image-rendering:crisp-edges; image-rendering:-moz-crisp-edges; image-rendering:pixelated; image-rendering: -o-crisp-edges; -ms-interpolation-mode: nearest-neighbor';
 	if(displayPixelated){
@@ -930,8 +942,12 @@ function compareImages() {
 				jQuery('input[name="resemble-method"], input[name="resemble-color"]').each(function () {
 					this.disabled = false;
 				});
-
-				displayRight(true);
+				
+				if (displayDiff) {
+					displayRight(true);
+				} else {
+					displayRight(false);
+				}
 			});
 
 	} else {
