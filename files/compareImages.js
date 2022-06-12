@@ -807,6 +807,7 @@ function handleFile(div, image) {
 	div.find('.main').remove();
 	div.find('.exif').remove();
 	div.find('.center').remove();
+	div.find('.histogram').remove();
 	div.append(jQuery('<div class="center">Reading data...</div>'));
 	image.dataUrl = null;
 	image3.dom = null;
@@ -834,6 +835,13 @@ function handleFile(div, image) {
 			}
 		}
 	});
+
+	// Append Histogram
+	var hist_div = document.createElement('div');
+	hist_div.setAttribute('class', 'histogram');
+	var hist_canvas = document.createElement('canvas');
+	hist_div.append(hist_canvas);
+	div.append(hist_div);
 
 	// Create dom element for type
 	switch (image.file.type) {
@@ -881,6 +889,20 @@ function handleFile(div, image) {
 						getDataUrl(image.dom, image.width, image.height, function (dataUrl) {
 							image.dataUrl = dataUrl;
 							compareImages();
+							histogram(dataUrl).onComplete(function (data) {
+								const ctx = hist_canvas.getContext('2d')
+								hist_canvas.width = 256;
+								hist_canvas.height = 100;
+								ctx.beginPath();
+								ctx.lineWidth = 1;
+								ctx.strokeStyle = '#FF0000'
+								for (var b = 0; b <= 255; b++) {
+									ctx.moveTo(b, 100);
+									ctx.lineTo(b, 100 - data[b]);
+								}
+								ctx.closePath();
+								ctx.stroke();
+							});
 						});
 						
 						// Metadata from PNG
