@@ -1,6 +1,6 @@
 # Image Comparison Tool for your Browser
 
-[Use it here!](https://jklgit.github.io/Image-Comparison-in-Browser/index.html)
+[Use it here!](https://benfzc.github.io/Image-Comparison-in-Browser/)
 
 Just drag and drop image or video files to compare. Files need to be smaller than 100 MB.
 
